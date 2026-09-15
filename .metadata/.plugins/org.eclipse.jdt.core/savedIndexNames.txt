@@ -1,0 +1,2 @@
+INDEX VERSION 1.134+D:\__OFSS_Aug20-Sep28\Day23_DevOps\BankingAppBackend\BankingAppBackend\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
