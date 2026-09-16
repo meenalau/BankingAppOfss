@@ -1,0 +1,69 @@
+<div class="oj-web-applayout-max-width oj-web-applayout-content">
+
+  <h2>Bank Accounts</h2>
+
+  <!-- ACCOUNT FORM -->
+  <oj-form-layout max-columns="2" direction="row">
+
+    <oj-input-text
+      id="acctCustomerId"
+      label-hint="Customer ID"
+      value="{{customerId}}"
+      readonly="true">
+    </oj-input-text>
+
+    <oj-input-text
+      id="acctBalance"
+      label-hint="Opening Balance"
+      value="{{balance}}"
+      required="true">
+    </oj-input-text>
+
+  </oj-form-layout>
+
+  <!-- ADD ACCOUNT -->
+  <oj-button
+    on-oj-action="[[createAccount]]"
+    chroming="callToAction">
+    Add Account
+  </oj-button>
+
+  <!-- ACCOUNT CREATED MESSAGE -->
+  <oj-bind-if test="[[showCreateTransaction]]">
+
+    <div
+      class="oj-callout-message oj-callout-message-info"
+      style="margin-top:20px;">
+
+      <oj-bind-text value="[[successMessage]]"></oj-bind-text>
+
+    </div>
+
+    <oj-button
+      on-oj-action="[[goToTransaction]]"
+      chroming="callToAction"
+      style="margin-top:10px;">
+      Create Transaction
+    </oj-button>
+
+  </oj-bind-if>
+
+  <!-- ACCOUNTS -->
+  <h3>All Accounts</h3>
+
+  <p>
+    Debug count:
+    <span data-bind="text: accounts().length"></span>
+  </p>
+
+  <!-- ACCOUNTS TABLE -->
+  <oj-table
+    id="accountsTable"
+    data="[[dataProvider]]"
+    columns="[[columns]]"
+    aria-label="Accounts Table"
+    display="grid"
+    style="width:100%;">
+  </oj-table>
+
+</div>

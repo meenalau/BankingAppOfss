@@ -1,0 +1,74 @@
+<div class="oj-web-applayout-max-width oj-web-applayout-content">
+
+  <h2>Customers</h2>
+
+  <!-- CUSTOMER FORM -->
+  <oj-form-layout max-columns="2" direction="row">
+
+    <oj-input-text
+      id="name"
+      label-hint="name"
+      value="{{name}}"
+      required="true"
+      validation-hint.required="Name is mandatory">
+    </oj-input-text>
+
+    <oj-input-text
+      id="email"
+      label-hint="email"
+      value="{{email}}"
+      required="true"
+      validation-hint.required="Email is mandatory">
+    </oj-input-text>
+
+  </oj-form-layout>
+
+  <!-- ADD CUSTOMER -->
+  <oj-button
+    on-oj-action="[[createCustomer]]"
+    chroming="callToAction">
+    Add Customer
+  </oj-button>
+
+  <!-- CUSTOMER CREATED MESSAGE -->
+  <oj-bind-if test="[[showCreateAccount()]]">
+
+    <div class="oj-callout-message oj-callout-message-info">
+      <oj-bind-text value="[[successMessage]]"></oj-bind-text>
+    </div>
+
+    <oj-button on-oj-action="[[goToCreateAccount]]">
+      Create Account
+    </oj-button>
+
+  </oj-bind-if>
+
+  <!-- CUSTOMERS -->
+  <h3>All Customers</h3>
+
+  <p>
+    Debug count:
+    <span data-bind="text: customers().length"></span>
+  </p>
+
+  <!-- CUSTOMERS TABLE -->
+  <oj-table
+    data="{{dataProvider}}"
+    columns="[[columns]]"
+    aria-label="Customers Table"
+    display="grid"
+    style="width:100%">
+
+    <template slot="actionTemplate" data-oj-as="cell">
+
+      <oj-button
+        chroming="callToAction"
+        on-oj-action="[[$parent.approveCustomer.bind($parent, cell.row.data)]]">
+        Approve
+      </oj-button>
+
+    </template>
+
+  </oj-table>
+
+</div>

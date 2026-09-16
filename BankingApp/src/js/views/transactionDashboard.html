@@ -1,0 +1,128 @@
+<div class="oj-web-applayout-max-width oj-web-applayout-content">
+
+  <h2>Transaction Dashboard</h2>
+
+  <!-- SEARCH BY TRANSACTION ID -->
+  <h3>Search by Transaction ID</h3>
+
+  <oj-form-layout max-columns="2" direction="row">
+
+    <oj-input-text
+      id="transactionId"
+      label-hint="Transaction ID"
+      value="{{transactionId}}"
+      placeholder="Enter Transaction ID">
+    </oj-input-text>
+
+  </oj-form-layout>
+
+  <oj-button
+    on-oj-action="[[searchTransaction]]"
+    chroming="callToAction">
+    Search
+  </oj-button>
+
+  <!-- SEARCH BY TRANSACTION TYPE -->
+  <h3 style="margin-top:30px;">
+    Search by Transaction Type
+  </h3>
+
+  <oj-form-layout max-columns="2" direction="row">
+
+    <oj-select-single
+      id="transactionType"
+      label-hint="Transaction Type"
+      value="{{transactionType}}"
+      data="[[transactionTypeDP]]">
+    </oj-select-single>
+
+  </oj-form-layout>
+
+  <oj-button
+    on-oj-action="[[searchByType]]"
+    chroming="callToAction">
+    Search by Type
+  </oj-button>
+
+  <oj-button
+    on-oj-action="[[clearSearch]]"
+    style="margin-left:10px;">
+    Clear
+  </oj-button>
+
+  <!-- MESSAGE -->
+  <oj-bind-if test="[[message]]">
+
+    <div
+      class="oj-callout-message oj-callout-message-info"
+      style="margin-top:20px;">
+
+      <oj-bind-text value="[[message]]"></oj-bind-text>
+
+    </div>
+
+  </oj-bind-if>
+
+  <!-- SINGLE TRANSACTION RESULT -->
+  <oj-bind-if test="[[showResult]]">
+
+    <h3 style="margin-top:30px;">
+      Transaction Details
+    </h3>
+
+    <oj-form-layout max-columns="2" direction="row">
+
+      <oj-input-text
+        label-hint="Transaction ID"
+        value="{{resultTransactionId}}"
+        readonly="true">
+      </oj-input-text>
+
+      <oj-input-text
+        label-hint="Account ID"
+        value="{{resultAccountId}}"
+        readonly="true">
+      </oj-input-text>
+
+      <oj-input-text
+        label-hint="Amount"
+        value="{{resultAmount}}"
+        readonly="true">
+      </oj-input-text>
+
+      <oj-input-text
+        label-hint="Transaction Type"
+        value="{{resultType}}"
+        readonly="true">
+      </oj-input-text>
+
+      <oj-input-text
+        label-hint="Transaction Date"
+        value="{{resultDate}}"
+        readonly="true">
+      </oj-input-text>
+
+    </oj-form-layout>
+
+  </oj-bind-if>
+
+  <!-- MULTIPLE TRANSACTIONS RESULT -->
+  <oj-bind-if test="[[showTypeResults]]">
+
+    <h3 style="margin-top:30px;">
+      Transaction List
+    </h3>
+
+    <!-- OJET TABLE -->
+    <oj-table
+      id="transactionTable"
+      data="[[transactionDataProvider]]"
+      columns="[[transactionColumns]]"
+      display="grid"
+      aria-label="Transaction List"
+      style="width:100%;">
+    </oj-table>
+
+  </oj-bind-if>
+
+</div>

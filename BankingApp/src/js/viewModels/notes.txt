@@ -1,0 +1,53 @@
+
+
+
+used microservices demo -students have the same with them
+
+D:\__OFSS_Aug20-Sep28\Day20_21_22_Ojet\JavaWorkspace_Microservices\account-service
+
+modify // comment eurwka line from properites file 
+//remove dependancies from pom.xml - 3 places 
+    // dep mgmt block ,
+    eureka -client , 
+    and <spring-cloud.version>2025.1.2</spring-cloud.version>  
+  and oject rest access : wit   @CrossOrigin(origins = "http://localhost:8000") 
+
+maven update and 
+--------------------------
+
+Before (fetch + ArrayDataProvider)	                                                    Now (Model/Collection API)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+fetch(BASE_URL) — you write the HTTP call yourself	                                    collection.fetch() — the Collection knows its own URL and handles the HTTP call internally
+
+self.customers(data) — you manually stuff the response into an observable array	        The Collection holds the models internally; you never manually touch a raw array
+
+POST body built by hand, fetch() called manually	                                    collection.create({...}) — builds a Model,
+                                                                                         POSTs it via the Model's own save(), 
+                                                                                        and inserts it into the Collection automatically on success
+
+ArrayDataProvider wraps a plain JS array	                                            CollectionDataProvider wraps the oj.Collection object itself
+                                                                                        — the table talks to the Collection, not a plain array
+                                                                                        
+ ===========
+
+ add new customer record , check network tab (inspect ) and confirm 
+
+ customers preflight (304), then two clean 200 XHR calls (the create POST, followed by the loadCustomers re-fetch), and the table now shows all four rows (Jay, Vijay, Sanjay, Ajay) with correct sequential IDs 1–4. Common Model + Collection API is fully functioning on Customers.
+
+Added to memory
+Added to memory
+
+Topics 15 (Collection API) and 16 (Common Model API) are now both genuinely covered — done, 
+in customers.js, using the real oj.Model/oj.Collection/CollectionDataProvider pattern.
+
+============Transactions.js ================
+Why table cells need a renderer instead of just a converter attribute
+
+oj-table columns don't accept a converter property directly the way oj-input-text does 
+— for formatted cell display, JET expects a renderer function that returns DOM content. 
+This is a good distinction to call out to your class: converters on form inputs format live user-editable values,
+ while table cell renderers format read-only display values 
+— same underlying IntlNumberConverter/IntlDateTimeConverter objects, reused in two different contexts.
+
+===========

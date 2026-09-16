@@ -1,0 +1,85 @@
+oj-flex / oj-flex-item — JET's responsive 12-column-equivalent flex grid, wrapping the form and table sections
+
+Responsive column sizing using oj-sm-12 oj-md-6 style classes — so on mobile it stacks full-width,
+ on tablet/desktop it splits into columns
+
+A responsive table/form arrangement: form fields side-by-side on desktop, 
+stacked on mobile — visibly different from the "free" NavDrawer responsiveness, actually authored by you in this view
+
+A locale dropdown (oj-select-single) with 2–3 locales (e.g. English-India, English-US, Hindi-India)
+A Date Opened column/field, since date formatting makes the locale switch visually obvious (currency alone can look similar across locales)
+
+Converters (balanceConverter, dateConverter) rebuilt reactively whenever the locale changes, 
+using JET's oj.Config.setLocale() + a page reload of the config
+ (JET requires this — locale isn't hot-swappable per-component, it's app-wide)
+ 
+-----------------------------------------
+ Use MutableArrayDataProvider:  "Keep using this DataProvider, but its underlying data has changed."
+ Use ArrayDataProvider: "Here is a completely new dataset. Use this."
+
+ REST API
+   ↓
+JSON Array
+   ↓
+new ArrayDataProvider(data)
+   ↓
+oj-table
+
+---------------------------------
+
+ JSON.stringify() -  Used when sending data to the backend.
+
+ assume data is JavaScript object
+ {
+  accountId: 100121,
+  amount: 5000,
+  type: "CREDIT"
+}
+
+need toconvert into JSON before sending to backend   like 
+{
+    "accountId":100121,
+    "amount":5000
+    "type":"CREDIT"
+    
+ }
+
+ JSON.parse() — JSON string → JavaScript object
+
+        var jsonString =  '{"customerId":101,"name":"Meenal","email":"abc@gmail.com"}';
+
+Then:var customer = JSON.parse(jsonString);
+
+    Now customer becomes a JavaScript object:  
+
+    customer.customerId
+    customer.name
+    customer.email
+
+    Purpose:    Convert JSON text → JavaScript object so JavaScript can work with the data.
+    --------------
+
+    When sending:
+
+        JavaScript Object
+       ↓
+        JSON.stringify()
+       ↓
+        JSON text
+       ↓
+        HTTP POST
+       ↓
+        Spring Boot
+
+When receiving:
+
+        Spring Boot
+    ↓
+        HTTP Response
+    ↓
+        JSON
+    ↓
+        res.json()
+    ↓
+J       avaScript Object
+==================

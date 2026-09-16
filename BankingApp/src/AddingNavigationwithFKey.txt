@@ -1,0 +1,146 @@
+D:\__OFSS_Aug20-Sep28\Day20_21_22_Ojet\OjetWorkspace_frontend\BankingApp
+
+
+
+Add Customer
+------
+All Customers
+Debug count: 4
+115	sadd	meenaluphale@gmail.com
+116	meenal	meenaluphale@gmail.com
+113	jay	jay@gmail.com
+114	vijay	vijay@gmail.com
+
+------------
+now for demo purpose we have listed all the customers on one page 
+also it is not logical to print all records on same page when i add newcustomer
+, what if i just want a message that displays hey customer you are registered with this account id and
+ then i want to navigate to other page /tab for creating the account for this customer (assume some document verification is done )
+ i should carry this id on next account page . 
+---------------------------------------------
+step 1 :  add after  self.email = ko.observable('');
+
+self.successMessage = ko.observable('');
+self.showCreateAccount = ko.observable(false);
+
+
+modify create customer :
+.then(function (res) {
+
+    if (!res.ok) {
+        throw new Error(
+            'Customer creation failed. HTTP Status: ' + res.status
+        );
+    }
+
+    return res.json();
+
+})
+.then(function (data) {
+
+    var customerId = data.customerId;
+
+    // Store customer ID
+    sessionStorage.setItem('customerId', customerId);
+
+    // Also store in OJET context
+    context.selectedCustomerId(customerId);
+
+    // Display message
+    self.successMessage(
+        'Hey ' + self.name() +
+        ', you are registered with Customer ID: ' +
+        customerId
+    );
+
+    // Display Create Account button
+    self.showCreateAccount(true);
+
+    // Clear form
+    self.name('');
+    self.email('');
+
+    // Refresh existing customer table
+    self.loadCustomers();
+
+})
+
+
+step 3 :
+
+Added goToCreateAccount()
+
+This is the new function that the Create Account button calls:
+
+self.goToCreateAccount = function () {
+
+    var customerId =
+        sessionStorage.getItem('customerId');
+
+    console.log(
+        'Navigating to account page for customer:',
+        customerId
+    );
+
+    app.getSelectedItem()('accounts');
+};
+----------------------------------------------
+self.successMessage
+self.showCreateAccount
+        ↓
+res.json()
+        ↓
+data.customerId
+        ↓
+sessionStorage.setItem()
+        ↓
+success message
+        ↓
+show Create Account button
+        ↓
+goToCreateAccount()
+
+
+=====================navigate to account page==========4 changes 
+js file 
+
+
+in the beggining : 
+1> 
+
+var self = this;
+
+    after var BASE_URL = 'http://localhost:8080/customers';
+
+    self.router = app.router; // add this line 
+
+2> 
+app.getSelectedItem()('accounts');
+
+    
+3> 
+self.goToCreateAccount = function () {
+
+    var customerId =
+        sessionStorage.getItem('customerId');
+
+    console.log(
+        'Navigating to account page for customer:',
+        customerId
+    );
+
+    self.router.go({ path: 'accounts' });
+};
+
+4> 
+
+html file 
+<oj-button on-oj-action="[[goToCreateAccount]]">
+    Create Account
+</oj-button>
+
+5>in appController.js 
+
+this.navigateTo = function (page) {
+    this.selection.path(page);
+};
