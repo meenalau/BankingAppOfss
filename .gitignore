@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+BankingApp/node_modules/
+BankingApp/web/
+BankingApp/.gitignore
