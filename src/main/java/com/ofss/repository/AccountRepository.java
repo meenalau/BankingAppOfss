@@ -5,5 +5,6 @@ import com.ofss.bean.Account;
 
 import java.util.*;
 public interface AccountRepository extends JpaRepository<Account, Long> {
+	
     List<Account> findByCustomerId(Long customerId);   // "show all accounts for this customer"
 }

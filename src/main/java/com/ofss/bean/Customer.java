@@ -18,6 +18,8 @@ public class Customer {
 
     private String name;
     private String email;
+    
+    
 	public Long getCustomerId() {
 		return customerId;
 	}
