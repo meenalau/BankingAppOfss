@@ -34,3 +34,4 @@ build/
 BankingApp/node_modules/
 BankingApp/web/
 BankingApp/.gitignore
+/.metadata/

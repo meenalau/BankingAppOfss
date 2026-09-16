@@ -38,6 +38,8 @@ public class Account {
 		this.accountNumber = accountNumber;
 		this.customerId = customerId;
 		this.balance = balance;
+		
+		System.out.println("account para constr called ");
 	}
 	public Account() {
 		
