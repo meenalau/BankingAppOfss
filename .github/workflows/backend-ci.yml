@@ -27,5 +27,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+     - name: compile with maven 
+        run: mvn compile
+
       - name: Build with Maven
         run: mvn -B clean package -DskipTests
