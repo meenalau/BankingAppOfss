@@ -14,13 +14,20 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8000") 
 public class TransactionController {
 
+    private final AccountController accountController;
+
     @Autowired
     private TransactionService transactionService;
+
+    TransactionController(AccountController accountController) {
+        this.accountController = accountController;
+    }
 
     /*{ "id": 1, "accountId": 1, "amount": 1500.0, "type": "CREDIT", "transactionDate": "2026-08-10T14:32:05.123" } */
     @PostMapping
     public ResponseEntity<?> createTransaction(@RequestBody Transaction transaction) {
         try {
+        	System.out.println("in transaction controller");
             return ResponseEntity.ok(transactionService.createTransaction(transaction));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

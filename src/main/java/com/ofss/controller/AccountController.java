@@ -25,6 +25,7 @@ public class AccountController {
 
     @GetMapping
     public List<Account> getAllAccounts() {
+    	System.out.println(accountService.getAllAccounts());
         return accountService.getAllAccounts();
     }
 
